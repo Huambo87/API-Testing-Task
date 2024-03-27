@@ -26,7 +26,7 @@ describe('Get IDs Test', () => {
   })
 
   it('check female ulist content', () => {
-    cy.request('/users?gender=male').then((response) => {
+    cy.request('/users?gender=female').then((response) => {
       console.log(response.body),
       expect(response.body).not.empty
       expect(response.body.idList).not.empty

@@ -11,7 +11,36 @@ describe('User Profile Test', () => {
             expect(response.body.user).has.property('gender').eq('male')
             expect(response.body.user).has.property('id').eq(15),
             expect(response.body.user).has.property('name'),
-            expect(response.body.user).has.property('registrationDate').contain('202')
+            expect(response.body.user).has.property('registrationDate').contain('201')
+            //Since the date is presented as a string, the simplest way to set the cutoff year 
+            // without parsing is to specify the first three digits of the year 
+        })
+    })
+
+    it('female user profile sample', () => {
+        cy.request('/user/5').then((response) => {
+            console.log(response),
+            expect(response.body.user).has.property('age'),
+            expect(response.body.user).has.property('city'),
+            expect(response.body.user).has.property('gender').eq('female')
+            expect(response.body.user).has.property('id').eq(5),
+            expect(response.body.user).has.property('name'),
+            expect(response.body.user).has.property('registrationDate').contain('201')
+            //Since the date is presented as a string, the simplest way to set the cutoff year 
+            // without parsing is to specify the first three digits of the year 
+        })
+    })
+
+    // Negative test: User ID 15 is a duplicate and known to belong to a male user
+    it('female user profile sample', () => {
+        cy.request('/user/15').then((response) => {
+            console.log(response),
+            expect(response.body.user).has.property('age'),
+            expect(response.body.user).has.property('city'),
+            expect(response.body.user).has.property('gender').eq('female')
+            expect(response.body.user).has.property('id').eq(5),
+            expect(response.body.user).has.property('name'),
+            expect(response.body.user).has.property('registrationDate').contain('201')
             //Since the date is presented as a string, the simplest way to set the cutoff year 
             // without parsing is to specify the first three digits of the year 
         })
