@@ -9,14 +9,14 @@ describe('User Profile Test', () => {
             var result = response.body.user
 
             console.log(response),
-            expect(result).has.property('age').to.satisfy(Number.isInteger),
-            expect(result).has.property('city').to.be.a('string'),
-            expect(result).has.property('gender').eq('male').to.be.a('string'),
-            expect(result).has.property('id').eq(15).to.satisfy(Number.isInteger),
-            expect(result).has.property('name').to.be.a('string'),
-            expect(result).has.property('registrationDate').to.be.a('string')
-            //Since the date is presented as a string, the simplest way to set the cutoff year 
-            // without parsing is to specify the first three digits of the year 
+                expect(result).has.property('age').to.satisfy(Number.isInteger),
+                expect(result).has.property('city').to.be.a('string'),
+                expect(result).has.property('gender').eq('male').to.be.a('string'),
+                expect(result).has.property('id').eq(15).to.satisfy(Number.isInteger),
+                expect(result).has.property('name').to.be.a('string'),
+                expect(result).has.property('registrationDate').to.be.a('string')
+            //Since the date is presented as a string, parsing is required. 
+            //See solutin example in api-user-regist-date-test.cy.js.
         })
     })
 
@@ -26,36 +26,34 @@ describe('User Profile Test', () => {
             var result = response.body.user
 
             console.log(response),
-            expect(result).has.property('age').to.satisfy(Number.isInteger),
-            expect(result).has.property('city').to.be.a('string'),
-            expect(result).has.property('gender').eq('female').to.be.a('string'),
-            expect(result).has.property('id').eq(5).to.satisfy(Number.isInteger),
-            expect(result).has.property('name').to.be.a('string'),
-            expect(result).has.property('registrationDate').to.be.a('string')
-            //Since the date is presented as a string, the simplest way to set the cutoff year 
-            // without parsing is to specify the first three digits of the year 
+                expect(result).has.property('age').to.satisfy(Number.isInteger),
+                expect(result).has.property('city').to.be.a('string'),
+                expect(result).has.property('gender').eq('female').to.be.a('string'),
+                expect(result).has.property('id').eq(5).to.satisfy(Number.isInteger),
+                expect(result).has.property('name').to.be.a('string'),
+                expect(result).has.property('registrationDate').to.be.a('string')
+            //Since the date is presented as a string, parsing is required. 
+            //See solutin example in api-user-regist-date-test.cy.js.
         })
     })
 
-    // Negative test: User ID 15 is a duplicate and known to belong to a male user
+    // Negative case: User ID 15 is a duplicate and known to belong to a male user.
     it('female user id duplicate', () => {
         cy.request('/user/15').then((response) => {
 
             var result = response.body.user
 
             console.log(response),
-            expect(result).has.property('age'),
-            expect(result).has.property('city'),
-            expect(result).has.property('gender').eq('female')
-            expect(result).has.property('id').eq(15),
-            expect(result).has.property('name'),
-            expect(result).has.property('registrationDate').contain('201')
-            //Since the date is presented as a string, the simplest way to set the cutoff year 
-            // without parsing is to specify the first three digits of the year 
+                expect(result).has.property('age'),
+                expect(result).has.property('city'),
+                expect(result).has.property('gender').eq('female')
+                expect(result).has.property('id').eq(15),
+                expect(result).has.property('name'),
+                expect(result).has.property('registrationDate')
         })
     })
 
-    // // Negative test: User ID is invalid
+    // // Negative case: User ID is invalid.
     it('invalid user id test', () => {
         cy.request('/user/12345678').then((response) => {
             console.log(response)
@@ -64,13 +62,13 @@ describe('User Profile Test', () => {
         })
     })
 
-    // // Negative test: Missing user ID
+    // // Negative case: Missing user ID.
     it('missing user id test', () => {
         cy.request('/user/').then((response) => {
             console.log(response),
-            expect(response.body.isSuccess).eq(false),
-            expect(response.body).has.property('errorCode').eq(404),
-            expect(response.body).has.property('error').eq('Not Found')
+                expect(response.body.isSuccess).eq(false),
+                expect(response.body).has.property('errorCode').eq(404),
+                expect(response.body).has.property('error').eq('Not Found')
         })
     })
 })
