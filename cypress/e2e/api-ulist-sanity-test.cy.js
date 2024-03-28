@@ -11,9 +11,15 @@ describe('Get IDs Test', () => {
 
   it('check male ulist content', () => {
     cy.request('/users?gender=male').then((response) => {
+      let resultslist = response.body.idList
       console.log(response.body),
         expect(response.body).not.empty
-        expect(response.body.idList).not.empty
+        expect(resultslist).not.empty
+
+        for (let i = 0; i < resultslist.length; i++ ){
+          expect(resultslist[i]).to.satisfy(Number.isInteger)
+        }
+
     })
   })
 
@@ -27,9 +33,15 @@ describe('Get IDs Test', () => {
 
   it('check female ulist content', () => {
     cy.request('/users?gender=female').then((response) => {
+      let resultslist = response.body.idList
       console.log(response.body),
         expect(response.body).not.empty
-      expect(response.body.idList).not.empty
+        expect(resultslist).not.empty
+
+        for (let i = 0; i < resultslist.length; i++ ){
+          expect(resultslist[i]).to.satisfy(Number.isInteger)
+        }
+
     })
   })
 
